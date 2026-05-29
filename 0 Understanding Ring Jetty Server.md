@@ -1,0 +1,85 @@
+The Jetty **adapter** listens on a port, receives valid HTTP requests, **adapts them into a Ring request map**, and **invokes the handler function** with that map.
+
+### 1️⃣ Jetty (Java server)
+
+- Listens on a TCP port
+- Parses raw HTTP bytes
+- Manages threads, sockets, keep-alive, etc.
+
+### 2️⃣ Ring Jetty adapter (`ring.adapter.jetty`)
+
+- Takes Jetty’s `HttpServletRequest`
+- **Builds a Clojure map** (Ring request)
+- Calls your handler function
+
+
+## 2. “Valid HTTP requests” — what that really means
+
+Jetty:
+- parses the HTTP request line
+- parses headers
+- handles chunked bodies, keep-alive, etc.
+
+If the request is malformed:
+- Jetty rejects it **before** Ring sees anything
+- your handler is never called
+
+So by the time your handler runs:
+- the request is already syntactically valid HTTP
+
+## 3. The actual call chain (important)
+
+Here is the real flow:
+
+```
+TCP socket
+   ↓
+Jetty HTTP parser
+   ↓
+HttpServletRequest (Java object)
+   ↓
+Ring Jetty adapter
+   ↓
+Clojure map (Ring request)
+   ↓
+(handler request)
+   ↓
+Ring response map
+   ↓
+Ring Jetty adapter
+   ↓
+HttpServletResponse
+   ↓
+Jetty writes bytes to socket
+```
+
+Your handler only ever sees **pure data**.
+
+
+## 4. What your handler really is
+
+Your handler is **not** a “callback” in the event-listener sense.
+
+It is:
+- a **pure function** from the adapter’s perspective
+- called synchronously
+- returns a value
+
+## . Why Ring feels clean
+
+Ring deliberately:
+
+- isolates HTTP wire complexity
+- isolates Java servlet APIs
+- gives you a simple function boundary
+
+That’s why middleware works so cleanly:
+- request in
+- response out
+- everything in between is just function composition
+
+---
+
+## 5. Final corrected one-liner (use this mentally)
+
+> **Jetty handles sockets and HTTP parsing; the Ring adapter translates that into a map and calls your handler.**
