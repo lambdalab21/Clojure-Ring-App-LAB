@@ -1,5 +1,5 @@
 
-# Minimal Ring Server
+# Request
 
 1. Make a project
 ```bash
@@ -8,17 +8,18 @@
 
 2. Add dependencies to the project
    Open project.clj file add `[ring "1.15.3"]` to the `dependencies`
+   
    it should look like:
 ```clojure
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [ring "1.15.3"]]
 ```
-   retrieve dependencies files by
+   
+3. Retrieve dependencies files by
    ```bash
    $ lein deps
    ```
 This downloads files to `~/.m2/repository`
-
 
 3. Add `jetty` library `(:requre [ring.adapter.jetty :as jetty])` to the namespace:
    ```clojure
@@ -32,15 +33,34 @@ This downloads files to `~/.m2/repository`
 (defn -main
   [& args]
   (ring.adapter.jetty/run-jetty
-    (fn [request] {:status 200
+    (fn [req] {:status 200
               :header {"Content-Type" "text/html"}
               :body "my response."})
     {:port 8080}))
 ```
 
 
-refactor the handler:
+5. Run the application
+```bash
+   $ lein run
+```
+   
+6. Request `http://localhost:8080`
 
+	a. curl
+``` shell
+$ curl http://localhost:8080
+```
+	
+	b. httpie
+``` shell
+$ http http://localhost:8080
+```
+	
+	c. browser
+, or open a browser and go to the site above.
+
+7. Refactor the **handler**.   A handler is a function that receives a map representing *HTTP Request*  and return a map representing *HTTP Response*:
 ```clojure
 (defn my-handler [request]
   {:status 200
@@ -52,24 +72,6 @@ refactor the handler:
   (ring.adapter.jetty/run-jetty my-handler {:port 8080}))
 ```
 
-
-3. Run the application
-   ```bash
-   $ lein run
-   ```
-   
-4. Request `http://localhost:8080`
-	a. curl
-``` shell
-$ curl http://localhost:8080
-```
-	b. httpie
-``` shell
-$ http http://localhost:8080
-```
-	c. browser
-, or open a browser and go to the site above.
-
 ## Killing the Server 
 if you get an error like :
 req-res.core> (start)
@@ -78,7 +80,7 @@ Address already in use
 ![[Pasted image 20260103074714.png]]
 
 Follow this step:
-1. Find the process 
+1. Find the process with **list open files** command, `lsof`:
 ```Bash
 sudo lsof -i :<PORT>
 ```
@@ -88,6 +90,7 @@ sudo lsof -i :<PORT>
    ```Bash
    kill <PID>
    ```
+In this example `kill 739681`
 
 3.  if the process does not terminate use -9 flag.
 ```Bash
@@ -132,7 +135,7 @@ The `ring.adapter.jetty` library serves as the glue between Ring and the embed
 - Finally, it starts the Jetty server, which begins listening for HTTP requests on the configured port.
 
 
-# Questions
+# Question
 ## What is an HTTP request?
 
 An HTTP request is a message sent from a client (usually a web browser or program) to a server to ask for data or perform an action.
@@ -148,6 +151,16 @@ It has three main parts:
 3. **Body** – contains the actual data (optional).  
 
 Browsers or clients use this information to display a webpage, handle an API response, or show an error depending on the status code.
+
+## What is a handler?
+
+An HTTP handler is the function or component in a web server that processes an HTTP request and generates a corresponding HTTP response.
+
+In concrete terms:
+
+- The **web server** (like Jetty, Express, or Flask) receives a request.
+    
+- It passes the request object to a **handler**.
 
 ## What is a server?
 A server is a computer or software that listens for requests from clients and sends back responses.
@@ -172,12 +185,8 @@ In web development, an **HTTP handler** specifically takes a _request_ and produ
 
 Example in **Clojure (Ring)**:
 
-```clojure
-(defn handler [request]   
-  {:status 200    
-   :headers {"Content-Type" "text/plain"}    
-   :body "Hello"})`
-```
+`(defn handler [request]   
+{:status 200    :headers {"Content-Type" "text/plain"}    :body "Hello"})`
 
 - `request` is a map describing what the client sent.
 - The return value is a map describing what to send back.
@@ -188,5 +197,6 @@ Handlers are the core logic of servers—they decide what to do with incoming re
 # Reference
 [source code](https://github.com/ring-clojure/ring/blob/master/ring-jetty-adapter/src/ring/adapter/jetty.clj)
 [ring-clojure](https://ring-clojure.github.io/ring/ring.adapter.jetty.html)
+
 
 

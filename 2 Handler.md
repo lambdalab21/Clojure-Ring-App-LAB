@@ -1,5 +1,4 @@
 
-
 A Ring handler is **just a function**. Nothing more. Jetty is irrelevant here.
 
 Read many times.  Memorize this:
@@ -7,18 +6,10 @@ A Ring handler is a function that takes a request map and returns a response map
 When the handler is invoked by `run-jetty`, the Jetty adapter constructs the request map and passes it to the handler, then converts the returned response map back into an HTTP response.  
 Because Ring adapters follow this convention, handlers usually assume the input is a map and do not perform explicit type checks.
 
-
-Your handler:
-```clojure
-(defn my-handler [request]   
-  {:status 200    
-   :headers {"content-type" "text/plain"}    
-   :body "Hello my-server"})`
-```
-
 the **minimal practical handler**:
+
 ```clojure
-(defn foo [_]   
+(defn minimal-handler [_]   
   {:status 200    
    :headers {}    
    :body ""})`
@@ -31,14 +22,26 @@ Anything less is either:
 
 Note: an underscore `_` as a parameter name ==indicates that the parameter is **ignored or unused** within the function body or expression where it appears==
 
+### 0. Prep, write a handler
+
+Write your handler:
+```clojure
+(defn my-handler [request]   
+  {:status 200    
+   :headers {"Content-Type" "text/plain"}    
+   :body "Hello my-server"})`
+```
+
+---
 ### 1. Call it directly (REPL, zero ceremony)
 
 In the REPL:
 
-`(my-handler {})`
+```REPL
+> (my-handler {})`
+```
 
 Result:
-
 ```clojure
 {:status 200  
  :headers {"content-type" "text/plain"}  
@@ -50,12 +53,11 @@ Ring does **not** enforce a request schema. If your handler doesn’t read anyth
 
 
 ---
-
 ### 2. With a minimal realistic request map
 
 If you want something closer to an HTTP request:
 
-```clojure
+```REPL
 (my-handler  
    {:request-method 
     :get   
@@ -63,6 +65,7 @@ If you want something closer to an HTTP request:
     :headers {"host" "localhost"}})`
 ```
 Same result because your handler ignores the request.
+
 
 ---
 
@@ -77,13 +80,12 @@ The moment you do this:
 ```clojure
 (defn my-handler [request]   
   {:status 200    
-   :body (:uri request)})`
+   :body (:uri request)})`  ;<-- trying to find :uri from `request`
 ```
 
 `nil` will explode.
 
 **Rule**:
-
 - `{}` is a safe empty request
 - `nil` is lazy and fragile
 
@@ -98,7 +100,7 @@ Now make the handler actually care:
 ```clojure
 (defn my-handler [request]   
   {:status 200    
-   :headers {"Content-Type" "text/plain"}    
+   :headers {"content-type" "text/plain"}    
    :body (str "URI = " (:uri request))})`
 ```
 
@@ -106,12 +108,10 @@ REPL calls:
 
 ```clojure
 > (my-handler {:uri "/test"}) 
-;; => {:status 200 :headers {"content-type" "text/plain"} :body "URI = /test"}
- 
+;; => "URI = /test"  
 
 > (my-handler {}) 
-;; => {:status 200 :headers {"content-type" "text/plain"} :body "URI ="}
-
+;; => "URI = nil"`
 ```
 
 This is how you **learn Ring**:  
@@ -151,7 +151,25 @@ Correct workflow:
 Jetty is plumbing.  
 Handlers are the engine.
 
-## Reference
-[ChatGPT Clojure function assistance](https://chatgpt.com/s/t_69584ac6bcec819192066052381b7642)
-[Middleware example](https://chatgpt.com/s/t_69584af444fc819184232b1cf5497349)
+
+## Exercises
+
+```Clojure
+(defn request-type-handler [request]
+  {:status 200
+   :headers {"Content-Type" "text/plain"}
+   :body (case (:request-method request)
+           :get "GET request"
+           :post "POST request"
+           "Unknown method")})
+```
+
+In REPL:
+```REPL
+> (practice1 {:request-method :get} )
+> (practice1 {:request-method :post} )
+> (practice1 {})
+```
+
+
 
