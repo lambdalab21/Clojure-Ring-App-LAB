@@ -135,10 +135,9 @@ Expected result:
 
 Answer before moving on.
 
-1. Did you restart Clojure when you changed `greeting`?
-2. What changed: the whole program, or one function definition?
-3. Why is this faster than compile → run → stop → edit → compile → run?
-4. Explain this to a 10-year-old without using the word “evaluation.”
+1. Did you restart Clojure when you changed `greeting`? No. 
+2. What changed: the whole program, or one function definition? Only one function definition(greeting). 
+3. Why is this faster than compile → run → stop → edit → compile → run? You avoid full restarts and compile cycles. Changes take effect quickly in the running program. 
 
 ---
 
@@ -308,13 +307,13 @@ If you reload the file, you do not want to forget the running server object.
 
 Answer without looking back.
 
-1. What does REPL stand for?
-2. In plain English, what does the REPL let you do?
-3. Why can you test a Ring handler without Jetty?
-4. What does `@box` do?
-5. What does `reset!` do?
-6. Why might server code use `defonce` instead of `def`?
-7. What is the danger of only typing commands without predicting the result first?
+1. What does REPL stand for? Read-Evaluate-Print-Loop.
+2. In plain English, what does the REPL let you do? Sending new code into a running program and see results without restarting.  
+3. Why can you test a Ring handler without Jetty? Because a handler is a regular function that t akes a request map and returns a response map. 
+4. What does `@box` do? Dereferences the atom to get its current value. 
+5. What does `reset!` do? It replaces the value inside the atom with a new value. 
+6. Why might server code use `defonce` instead of `def`? So that reloading the namespace does not lose the reference to the running server object. 
+7. What is the danger of only typing commands without predicting the result first? You won't understand what's happening or catch mistakes early. 
 
 ---
 
@@ -323,6 +322,7 @@ Answer without looking back.
 Before going to the next lesson, explain this in your own words:
 
 > How is REPL-driven development different from running the program again and again from the terminal?
+REPL-driven developments keep the program running. You send small code changes into the live program and test them instantly instead of restarting from the terminal every time. 
 
 Good answer should mention:
 
