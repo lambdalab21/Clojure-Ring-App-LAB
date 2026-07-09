@@ -1,4 +1,4 @@
-# 3B. REPL-Controlled Server Code — Feynman Lesson
+# 3B. REPL-Controlled Server Code
 
 ## Purpose
 
@@ -81,11 +81,11 @@ URI: /test
 
 ### Check your understanding
 
-1. Is `my-handler` a normal function?
-2. What does it receive?
-3. What does it return?
-4. Which request-map key does it read?
-5. Which response-map key contains the text the client sees?
+1. Is `my-handler` a normal function? Yes, my-handler is a normal Clojure function. 
+2. What does it receive? It receives a request map. 
+3. What does it return? It returns a response map. 
+4. Which request-map key does it read? It reads the :uri key from the request map. 
+5. Which response-map key contains the text the client sees? The :body key contains the text the client sees.  
 
 ---
 
@@ -117,10 +117,10 @@ means:
 
 ### Check your understanding
 
-1. Why do we store the server object?
-2. What does `@server` mean?
-3. What does `reset!` do?
-4. Why is `defonce` useful during REPL development?
+1. Why do we store the server object? We store the server object so that we can stop it later. 
+2. What does `@server` mean? @server dereferences the atom to get the current server for instance
+3. What does `reset!` do? replaces the value inside of the atom. 
+4. Why is `defonce` useful during REPL development? defonce prevents the atom from being reset when the namespace is reloaded in the REPL. 
 
 ---
 
@@ -142,11 +142,10 @@ means:
 ```
 
 ### Check your understanding
-
-1. Why does `start` check `@server` first?
-2. What problem happens if two servers try to use the same port?
-3. Why do we use `:join? false`?
-4. Why do we use `#'my-handler`?
+ 
+1. What problem happens if two servers try to use the same port? Two servers on the same port cause a "port already in use" error. 
+2. Why do we use `:join? false`? :join? false lets the server run in the background so that the repl stays responsive. 
+3. Why do we use `#'my-handler`? #'my-handler passes a var reference so that the code changes are picked up without restarting Jetty. 
 
 ---
 
