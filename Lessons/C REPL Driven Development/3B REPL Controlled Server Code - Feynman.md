@@ -6,7 +6,6 @@ This lesson answers one question:
 
 > What code do we need so the REPL can start and stop Jetty?
 
-You are not using CIDER yet. First read and understand the server-control code.
 
 ---
 
@@ -67,14 +66,6 @@ Replace it with:
               "URI: " (:uri request) "\n")})
 ```
 
-Feynman version:
-
-> The handler reads the request ticket and returns a response tray.
-
-It receives a request map.
-
-It returns a response map.
-
 Before Jetty, you should still be able to imagine this call:
 
 ```clojure
@@ -103,14 +94,6 @@ URI: /test
 ```clojure
 (defonce server (atom nil))
 ```
-
-Feynman version:
-
-> `server` is a small box. At first, the box is empty. Later, we put the running Jetty server object inside it.
-
-Why do we need this?
-
-Because if the REPL starts Jetty, the REPL also needs a way to stop Jetty later.
 
 ```clojure
 @server
@@ -154,40 +137,9 @@ means:
                                 :join? false}))
       :server-started)))
 ```
-
-Plain English:
-
-> If a server is already stored in the box, do not start another one. If the box is empty, start Jetty, store the server object, and say `:server-started`.
-
-Important pieces:
-
 ```clojure
 :port 8080
 ```
-
-means:
-
-> Listen on port 8080.
-
-```clojure
-:join? false
-```
-
-means:
-
-> Start Jetty but let the REPL keep accepting commands.
-
-```clojure
-#'my-handler
-```
-
-means:
-
-> Give Jetty a live reference to the handler Var.
-
-Feynman analogy:
-
-> `my-handler` is like a photocopy of today's recipe. `#'my-handler` is like the recipe book page. If the recipe changes, Jetty can read the updated page.
 
 ### Check your understanding
 
@@ -209,38 +161,8 @@ Feynman analogy:
       :server-stopped)
     :server-not-running))
 ```
-
-Plain English:
-
-> If the server is running, stop it and empty the box. If there is no server, say so.
-
 ```clojure
 (defn restart []
   (stop)
   (start))
 ```
-
-Plain English:
-
-> Stop, then start.
-
-### Check your understanding
-
-1. Why should `stop` reset the atom to `nil`?
-2. What should happen if you call `(stop)` twice?
-3. What does `(restart)` really do?
-4. Why is `restart` not magic?
-
----
-
-## 6. Exit ticket
-
-Close the file and explain:
-
-1. What the handler does.
-2. What the server atom stores.
-3. What `start` does.
-4. What `stop` does.
-5. Why `#'my-handler` matters.
-
-If you cannot explain those, you are not ready to use CIDER yet.
