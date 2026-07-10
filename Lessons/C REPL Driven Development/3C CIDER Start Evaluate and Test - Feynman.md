@@ -35,11 +35,10 @@ This loads the file into the running REPL process.
 
 ### Check your understanding
 
-1. What does `cider-jack-in` start?
-2. Do you also need to run `lein repl` manually?
-3. What does `C-c C-k` do?
-4. Why does the REPL not know about `start` before the file is loaded?
-
+1. What does `cider-jack-in` start? It starts an nREPL server connected to your Clojure project and opens a REPL buffer in Emacs. 
+2. Do you also need to run `lein repl` manually? No. 
+3. What does `C-c C-k` do? It evaluates the current file into the running REPL process.
+4. Why does the REPL not know about `start` before the file is loaded? The functions are defined in the source file; they must be evaluated before the REPL can see them. 
 ---
 
 ## 4. Start the server from the REPL
@@ -105,11 +104,11 @@ URI: /pizza
 
 ### Check your understanding
 
-1. Who receives the HTTP request first: Jetty or your handler?
-2. Who calls your handler?
-3. Why does `/pizza` appear in the response body?
-4. What does `curl -i` show that plain `curl` hides?
-5. Is the REPL running inside the same program that started Jetty?
+1. Who receives the HTTP request first: Jetty or your handler?Jetty. 
+2. Who calls your handler? The ring jetty adapter. 
+3. Why does `/pizza` appear in the response body? The 'my-handler' function reads (:uri request) and includes it in the response body. 
+4. What does `curl -i` show that plain `curl` hides? HTTP response headers. 
+5. Is the REPL running inside the same program that started Jetty? Yes, the REPL and the web server run in the same JVM process. 
 
 ---
 
@@ -145,9 +144,9 @@ Both are useful.
 
 ### Check your understanding
 
-1. Which test is faster for checking handler logic?
-2. Which test proves Jetty and the adapter are also working?
-3. Why should you know both methods?
+1. Which test is faster for checking handler logic? Direct handler call. 
+2. Which test proves Jetty and the adapter are also working? The curl test through the real server.  
+3. Why should you know both methods? Direct calls are fast for unit-testing logic. Real HTTP tests verify the full stack. 
 
 ---
 
@@ -183,7 +182,7 @@ Then test again with curl.
 
 ### Check your understanding
 
-1. What does `(stop)` do to Jetty?
-2. What does `(stop)` do to the `server` atom?
-3. Why should curl fail after stopping the server?
-4. What does `(restart)` do?
+1. What does `(stop)` do to Jetty? Calls on the Jetty Instance. 
+2. What does `(stop)` do to the `server` atom? It resets everything to nil. 
+3. Why should curl fail after stopping the server? No process is listening on port 8080 anymore. 
+4. What does `(restart)` do? Calls (stop) then (start)
