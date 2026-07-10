@@ -1,13 +1,5 @@
 # 3C. CIDER: Start, Evaluate, and Test — Feynman Lesson
 
-## Purpose
-
-This lesson answers one question:
-
-> How do I use Emacs + CIDER to control the running web server?
-
-You already wrote the server-control code. Now you will use it from the REPL.
-
 ---
 
 ## 1. Open the project
@@ -29,13 +21,6 @@ Run:
 ```text
 M-x cider-jack-in
 ```
-
-Feynman version:
-
-> CIDER starts a REPL that is connected to your project.
-
-You do **not** need to run `lein repl` manually when using `cider-jack-in`.
-
 ---
 
 ## 3. Load the file into the REPL
@@ -47,20 +32,6 @@ C-c C-k
 ```
 
 This loads the file into the running REPL process.
-
-Feynman version:
-
-> Loading the file is like telling the running program, “Here are the functions I want you to know.”
-
-After this, the REPL should know:
-
-```clojure
-my-handler
-start
-stop
-restart
-server
-```
 
 ### Check your understanding
 
@@ -96,8 +67,6 @@ Expected result:
 ```clojure
 :server-already-running
 ```
-
-This is good. Your `start` function is protecting you from starting two servers on the same port.
 
 ---
 
@@ -218,13 +187,3 @@ Then test again with curl.
 2. What does `(stop)` do to the `server` atom?
 3. Why should curl fail after stopping the server?
 4. What does `(restart)` do?
-
----
-
-## 8. Exit ticket
-
-Explain this without looking:
-
-> CIDER starts a REPL connected to my project. I load my file into that REPL. Then I can call `(start)` to start Jetty, use `curl` to send real requests, and call `(stop)` to stop the server.
-
-If you cannot explain it, repeat this lesson.
