@@ -82,10 +82,10 @@ If that worked, you changed behavior in the running app.
 
 ### Check your understanding
 
-1. Did Jetty restart?
-2. Did you run `lein run`?
-3. What did you evaluate?
-4. Why did the response change?
+1. Did Jetty restart? No. 
+2. Did you run `lein run`? No. 
+3. What did you evaluate? The updated my-handler definition. 
+4. Why did the response change? Because #'my-handler' was passed to run-jetty, Jetty resolves the latest function value on each request. 
 
 ---
 
@@ -148,10 +148,10 @@ curl new port
 
 ### Check your understanding
 
-1. If you change only the body string, do you need restart?
-2. If you change the port, do you need restart?
-3. If you change `:join? false` to another Jetty option, do you need restart?
-4. Why are handler logic and server setup different?
+1. If you change only the body string, do you need restart? No.
+2. If you change the port, do you need restart? Yes. 
+3. If you change `:join? false` to another Jetty option, do you need restart? Yes. 
+4. Why are handler logic and server setup different? The handler logic lives inside the re-evaluate function. Server setup is baked into the Jetty instance created at (start). 
 
 ---
 
@@ -182,9 +182,9 @@ curl -i http://localhost:8080/drill
 
 Questions:
 
-1. What changed?
-2. Did you restart Jetty?
-3. Which request-map keys did the handler read?
-4. Why is this faster than restarting the whole app?
+1. What changed? The response body now includes ht HTTP method. 
+2. Did you restart Jetty? No. 
+3. Which request-map keys did the handler read? :request-method and :uri.
+4. Why is this faster than restarting the whole app? Re-evaluating one function 
 
 ---
