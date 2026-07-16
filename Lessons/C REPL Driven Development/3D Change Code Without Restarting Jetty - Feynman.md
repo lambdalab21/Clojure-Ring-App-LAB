@@ -1,14 +1,6 @@
-# 3D. Change Code Without Restarting Jetty — Feynman Lesson
+# 3D. Change Code Without Restarting Jetty
 
 ## Purpose
-
-This lesson answers one question:
-
-> How can the server keep running while I change handler code?
-
-This is where Clojure starts to feel different.
-
----
 
 ## 1. The idea
 
@@ -34,10 +26,6 @@ test
 ```
 
 No server restart.
-
-Feynman version:
-
-> The kitchen stays open. You update one recipe.
 
 ---
 
@@ -132,15 +120,6 @@ Usually no restart is needed when you change:
 - how the handler reads the request map
 - helper functions called by the handler
 
-Workflow:
-
-```text
-edit function
-C-M-x
-curl or refresh browser
-observe
-```
-
 ---
 
 ## 6. When restart is needed
@@ -209,11 +188,3 @@ Questions:
 4. Why is this faster than restarting the whole app?
 
 ---
-
-## 8. Exit ticket
-
-Explain this without looking:
-
-> Jetty keeps running. I change a handler function and evaluate that function in the REPL. Because Jetty was started with `#'my-handler`, it can use the current definition of the handler. I only restart Jetty when server setup changes.
-
-If you cannot explain it, you copied the workflow but did not learn it.
