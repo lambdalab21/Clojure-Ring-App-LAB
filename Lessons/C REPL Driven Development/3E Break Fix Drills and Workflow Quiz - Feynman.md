@@ -2,10 +2,6 @@
 
 ## Purpose
 
-This lesson answers one question:
-
-> Do you really understand the REPL workflow, or did you only copy it?
-
 You will deliberately break small things and explain what happened.
 
 Do this only after Lessons 3A-3D work.
@@ -27,8 +23,6 @@ explain
 fix
 test again
 ```
-
-If you skip prediction, this becomes a typing exercise.
 
 ---
 
@@ -206,25 +200,3 @@ Answer without looking.
 10. When do you need to restart Jetty?
 11. When can you avoid restarting Jetty?
 12. Why is `:headers` plural?
-13. Why is this not just a typing exercise?
-
----
-
-## 8. Final teach-back
-
-Close all files.
-
-Explain the full workflow in 6-8 sentences.
-
-You must use these words correctly:
-
-- REPL
-- CIDER
-- handler
-- Jetty
-- atom
-- `#'my-handler`
-- evaluate
-- restart
-
-If you cannot explain it clearly, repeat the split lessons.
