@@ -1,4 +1,4 @@
-# 3E. Break/Fix Drills and Workflow Quiz — Feynman Lesson
+# 3E. Break/Fix Drills and Workflow Quiz
 
 ## Purpose
 
