@@ -54,10 +54,10 @@ curl -i http://localhost:8080/
 
 Questions:
 
-1. Does the body still appear?
-2. Does the `Content-Type` header behave as expected?
-3. Why is `:headers` the correct Ring key?
-4. What did this teach you about response maps?
+1. Does the body still appear? Yes, the body still appears. 
+2. Does the `Content-Type` header behave as expected? No, content-type header is missing. 
+3. Why is `:headers` the correct Ring key? :headers is the correct ring key
+4. What did this teach you about response maps? Response map must follow Ring spec, incorrect keys are ignored. 
 
 Fix it before continuing.
 
@@ -103,10 +103,10 @@ Test with curl.
 
 Questions:
 
-1. Did the running server immediately use the new handler?
-2. What changed when you passed `my-handler` instead of `#'my-handler`?
-3. Which version supports the beginner REPL workflow better?
-4. Why?
+1. Did the running server immediately use the new handler? No. 
+2. What changed when you passed `my-handler` instead of `#'my-handler`? It passed a snapshot of the function instead of a live reference. 
+3. Which version supports the beginner REPL workflow better? #'my-handler version.
+4. Why? It allows live code reloading in the REPL workflow. 
 
 Fix it:
 
@@ -129,31 +129,13 @@ Call:
 
 Questions:
 
-1. What does the first call return?
-2. What does the second call return?
-3. Why is that better than trying to start a second server?
-4. What error might happen if the code allowed two servers on the same port?
+1. What does the first call return? :server-started
+2. What does the second call return? :server-already-running 
+3. Why is that better than trying to start a second server? Prevents port conflicts. 
+4. What error might happen if the code allowed two servers on the same port? "Address already in use". 
 
----
 
-## 5. Break 4: Stop twice
-
-Call:
-
-```clojure
-(stop)
-(stop)
-```
-
-Questions:
-
-1. What does the first call return?
-2. What does the second call return?
-3. Why should stopping an already-stopped server not crash the learning workflow?
-
----
-
-## 6. The workflow to memorize
+## 5. The workflow to memorize
 
 For handler changes:
 
@@ -184,19 +166,18 @@ then test through Jetty
 
 ---
 
-## 7. Final quiz
+## 6. Final quiz
 
 Answer without looking.
 
-1. What is REPL-driven development?
-2. Why is Clojure pleasant for this workflow?
-3. What does `cider-jack-in` do?
-4. What does `C-c C-k` do?
-5. What does `C-M-x` do?
-6. What does `:join? false` do?
-7. Why do we store the Jetty server object in an atom?
-8. Why do we use `defonce` for the server atom?
-9. What does `#'my-handler` mean in this lesson?
-10. When do you need to restart Jetty?
-11. When can you avoid restarting Jetty?
-12. Why is `:headers` plural?
+1. Why is Clojure pleasant for this workflow? Because of immutable data, live reloading, and REPL integration. 
+2. What does `cider-jack-in` do? cider-jack-in starts nREPL servers and connects Emacs to the Clojure project. 
+3. What does `C-c C-k` do? Loads the entire current file into the REPL. 
+4. What does `C-M-x` do? Evaluates the current top-level form. 
+5. What does `:join? false` do? Runs Jetty in the background so that REPL stays responsive. 
+6. Why do we store the Jetty server object in an atom? To be able to .stop it later. 
+7. Why do we use `defonce` for the server atom? Defonce keeps the atom across namespace reloads. 
+8. What does `#'my-handler` mean in this lesson? #;my-handler is a var reference. Jetty sees code changes without restarting. 
+9. When do you need to restart Jetty? Restarts are needed for server configs. 
+10. When can you avoid restarting Jetty? Avoiding restart for handler logic/body changes. 
+11. Why is `:headers` plural? :headers is plural because it is a map of multiple headers. 
