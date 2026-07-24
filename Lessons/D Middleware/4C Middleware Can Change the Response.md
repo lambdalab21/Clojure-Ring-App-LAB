@@ -1,17 +1,5 @@
 # 4C. Middleware Can Change the Response
 
-## Purpose
-
-This lesson answers one question:
-
-> Can middleware change the response after the handler runs?
-
-Yes.
-
-Middleware can do work before the handler, after the handler, or both.
-
----
-
 ## 1. Review
 
 This middleware does something before the handler:
@@ -229,5 +217,3 @@ Feynman version:
 Explain this without looking:
 
 > Middleware can call the handler, capture the response map, and return a changed response map. Nested middleware means the request travels from the outside wrapper inward, and the response travels back outward.
-
-If you cannot explain that, do not continue.
