@@ -35,11 +35,6 @@ Add this:
     (let [response (handler request)]
       (assoc-in response [:headers "X-Powered-By"] "Student Middleware"))))
 ```
-
-Feynman version:
-
-> The helper lets the cook make the tray first. Then the helper adds a label to the tray before it goes out.
-
 ---
 
 ## 3. Read the code slowly
@@ -96,11 +91,11 @@ You should see:
 
 ### Stop and answer
 
-1. Which function creates the original response?
-2. Which function adds the new header?
-3. Does `wrap-powered-by` change the request map?
-4. Does it change the response map?
-5. Why is `assoc-in` used instead of `assoc`?
+1. Which function creates the original response? my-handler creates the original response. 
+2. Which function adds the new header? wrap-powered-by adds the new header. 
+3. Does `wrap-powered-by` change the request map? No. 
+4. Does it change the response map? Yes. It changes the response map. 
+5. Why is `assoc-in` used instead of `assoc`? assoc-in is used because :headers is a nested map. 
 
 ---
 
@@ -192,28 +187,15 @@ Important:
 
 - Request goes outside → inside.
 - Response comes inside → outside.
-
-Feynman version:
-
-> The order ticket goes through the outer helper, then inner helper, then cook. The finished tray comes back through the helpers on the way out.
-
 ---
 
 ## 8. Check your understanding
 
-1. Is `app` still a handler?
-2. Why can Jetty run `app`?
-3. Which middleware is outside?
-4. Which middleware is inside?
-5. Which middleware prints the URI?
-6. Which middleware adds the response header?
-7. Does the response pass back through the outer middleware?
-8. Why does order matter?
-
----
-
-## 9. Exit ticket
-
-Explain this without looking:
-
-> Middleware can call the handler, capture the response map, and return a changed response map. Nested middleware means the request travels from the outside wrapper inward, and the response travels back outward.
+1. Is `app` still a handler? Yes. App is still a handler. 
+2. Why can Jetty run `app`? Jetty can run ap because it's a valid ring handler. 
+3. Which middleware is outside? wrap-powered-by is outside. 
+4. Which middleware is inside? wrap-log-request is inside. 
+5. Which middleware prints the URI? wrap-log-request prints the URI. 
+6. Which middleware adds the response header? wrap-powered-by adds the response header.
+7. Does the response pass back through the outer middleware? Yes. The response passes back through the outer middleware. 
+8. Why does order matter? Order matters because requests flow inward and response flows outward affecting what each middleware can see our modify. 
