@@ -1,17 +1,5 @@
 # 4D. Middleware Can Change the Request
 
-## Purpose
-
-This lesson answers one question:
-
-> Can middleware change the request before the handler sees it?
-
-Yes.
-
-This is powerful, so learn it slowly.
-
----
-
 ## 1. Add a request-changing middleware
 
 Add this:
@@ -22,11 +10,6 @@ Add this:
     (let [new-request (assoc request :student/name "Student")]
       (handler new-request))))
 ```
-
-Feynman version:
-
-> The helper writes an extra note on the order ticket before giving it to the cook.
-
 ---
 
 ## 2. Change the handler to read the added value
