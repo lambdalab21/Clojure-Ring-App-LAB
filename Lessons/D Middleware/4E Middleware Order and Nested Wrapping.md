@@ -1,13 +1,4 @@
 # 4E. Middleware Order and Nested Wrapping
-
-## Purpose
-
-This lesson answers one question:
-
-> Why does middleware order matter?
-
-Middleware is not decoration. Order changes behavior.
-
 ---
 
 ## 1. Current app
@@ -155,38 +146,8 @@ leave B
 
 ---
 
-## 5. Use an analogy: entering and leaving rooms
 
-Imagine the handler is inside a room.
-
-Middleware A is an outer hallway.
-
-Middleware B is an inner hallway.
-
-To reach the handler:
-
-```text
-enter A → enter B → handler
-```
-
-To leave:
-
-```text
-handler → leave B → leave A
-```
-
-That is why logs often look like:
-
-```text
-enter A
-enter B
-leave B
-leave A
-```
-
----
-
-## 6. Check your understanding
+## 5. Check your understanding
 
 1. Does the outer middleware see the request before the inner middleware?
 2. Does the outer middleware see the response after the inner middleware?
@@ -196,7 +157,7 @@ leave A
 
 ---
 
-## 7. Exit ticket
+## 6. Exit ticket
 
 Explain this without looking:
 
