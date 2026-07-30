@@ -59,10 +59,6 @@ wrap-powered-by
 client
 ```
 
-Feynman version:
-
-> The order ticket walks inward through the helpers to the cook. The finished tray walks back outward through the helpers.
-
 ---
 
 ## 3. Make order visible
@@ -139,28 +135,18 @@ leave B
 
 ### Stop and answer
 
-1. Which middleware sees the request first in the first example?
-2. Which middleware sees the response last in the first example?
-3. What changed when you reversed the nesting?
-4. Why is middleware order not harmless?
+1. Which middleware sees the request first in the first example? wrap-enter-a
+2. Which middleware sees the response last in the first example? wrap-enter-a
+3. What changed when you reversed the nesting? Request and response travel order reversed
+4. Why is middleware order not harmless? Order changes when code runs and can break logging, headers, auth, etc.
 
 ---
 
 
 ## 5. Check your understanding
 
-1. Does the outer middleware see the request before the inner middleware?
-2. Does the outer middleware see the response after the inner middleware?
-3. Why can middleware wrap both request and response behavior?
-4. Why should you avoid adding many middlewares before understanding order?
-5. What mistake happens if a student reads nested middleware only top-to-bottom?
-
----
-
-## 6. Exit ticket
-
-Explain this without looking:
-
-> Middleware order matters because the request travels from the outer wrapper inward, but the response travels from the handler back outward through the wrappers.
-
-If you cannot explain that, do not continue to the thread macro.
+1. Does the outer middleware see the request before the inner middleware? Yes. 
+2. Does the outer middleware see the response after the inner middleware? Yes. 
+3. Why can middleware wrap both request and response behavior? Each wrapper can run code before calling and next handler and after receiving the response. 
+4. Why should you avoid adding many middlewares before understanding order? Wrong order produces surprising or broken behavior that is hard to debug. 
+5. What mistake happens if a student reads nested middleware only top-to-bottom? They reverse the actual request/response flow. 
