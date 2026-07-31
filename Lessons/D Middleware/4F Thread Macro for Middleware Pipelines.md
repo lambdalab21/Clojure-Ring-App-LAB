@@ -108,8 +108,6 @@ wrap that with wrap-powered-by
 
 ## 5. Important warning
 
-The thread macro is not middleware.
-
 The thread macro is only a writing convenience.
 
 Middleware is still just:
@@ -186,10 +184,6 @@ wrap-add-student-name
 my-handler
 ```
 
-Response comes back outward.
-
-Do not confuse build order with request entry order.
-
 ---
 
 ## 8. Check your understanding
@@ -200,13 +194,3 @@ Do not confuse build order with request entry order.
 4. Convert `(c (b (a x)))` into thread-macro style.
 5. Why did we learn nested wrapping before `->`?
 6. Why is “middleware is just a library feature” wrong?
-
----
-
-## 9. Exit ticket
-
-Explain this without looking:
-
-> The thread macro makes nested middleware wrapping easier to read, but middleware itself is still just function wrapping. Each middleware receives a handler and returns a new handler.
-
-If you cannot explain that, go back to nested wrapping.
