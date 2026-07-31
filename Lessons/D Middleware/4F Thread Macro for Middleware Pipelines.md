@@ -188,9 +188,9 @@ my-handler
 
 ## 8. Check your understanding
 
-1. What does `->` help with?
-2. Is `->` required for middleware?
-3. What does `(-> x f g)` become?
-4. Convert `(c (b (a x)))` into thread-macro style.
-5. Why did we learn nested wrapping before `->`?
-6. Why is “middleware is just a library feature” wrong?
+1. What does `->` help with? Readability of nested function calls. 
+2. Is `->` required for middleware? No. 
+3. What does `(-> x f g)` become? (g (f x))
+4. Convert `(c (b (a x)))` into thread-macro style. (-> x a b c)
+5. Why did we learn nested wrapping before `->`? So that the real wrapping/order is understood first. 
+6. Why is “middleware is just a library feature” wrong? Middleware is just ordinary functions that take and return handlers. 
