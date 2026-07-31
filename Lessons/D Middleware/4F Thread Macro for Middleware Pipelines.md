@@ -69,10 +69,6 @@ means roughly:
 (h (g (f x)))
 ```
 
-Feynman version:
-
-> Take this thing, pass it to the next function, then pass that result to the next function.
-
 ---
 
 ## 4. Convert the middleware nesting
@@ -108,8 +104,6 @@ wrap that with wrap-log-request
 wrap that with wrap-powered-by
 ```
 
-The final result is still a handler.
-
 ---
 
 ## 5. Important warning
@@ -123,14 +117,6 @@ Middleware is still just:
 ```text
 handler → handler
 ```
-
-Do not say:
-
-> Middleware works because of the thread macro.
-
-Better:
-
-> Middleware works because each middleware receives a handler and returns a handler. The thread macro only makes the wrapping easier to read.
 
 ---
 
