@@ -302,9 +302,3 @@ Explain these:
 ```clojure
 (request-method-handler {})
 ```
-
-5. Explain this line to a 10-year-old:
-
-```clojure
-(defn request-method-handler [request] ...)
-```
