@@ -4,11 +4,10 @@
 
 By the end, you should be able to answer these without looking:
 
-1. What is a handler?
-2. What does a handler receive?
-3. What does a handler return?
-4. Who calls the handler in this lesson?
-5. Why are we not using Jetty yet?
+1. What is a handler? A function that takes a request map and returns a response map. 
+2. What does a handler receive? A request map. 
+3. What does a handler return? A response map (:status, :headers, :body).
+4. Why are we not using Jetty yet? To learn the handler first. 
 
 ---
 
@@ -43,10 +42,10 @@ File paths use underscores.
 
 Answer in your notes:
 
-1. What command created the project?
-2. What directory did you move into?
-3. What file are you going to edit?
-4. Why is the folder named `jetty_demo` but the namespace is `jetty-demo.core`?
+1. What command created the project? lein new app jetty-demo
+2. What directory did you move into? jetty-demo
+3. What file are you going to edit? src/jetty-demo/core.clj
+4. Why is the folder named `jetty_demo` but the namespace is `jetty-demo.core`? Namespaces use hyphens. 
 
 ---
 
@@ -169,16 +168,6 @@ Replace the file with this:
   (println (uri-handler {})))
 ```
 
-### Predict before running
-
-For each call, predict the `:body` value:
-
-```clojure
-(uri-handler {:uri "/"})
-(uri-handler {:uri "/about"})
-(uri-handler {})
-```
-
 Now run:
 
 ```bash
@@ -225,10 +214,10 @@ Do not use `nil` as your normal fake request.
 
 ### Check your understanding
 
-1. Why is `{}` better than `nil` for a fake request?
-2. Does `(:uri nil)` always crash?
-3. Why can `nil` hide mistakes?
-4. What kind of value does a Ring handler normally expect?
+1. Why is `{}` better than `nil` for a fake request? {} is a real map. Nil is not. 
+2. Does `(:uri nil)` always crash? No. Keywords on nil return nil. 
+3. Why can `nil` hide mistakes? Missing keys look the same as nil input, so bugs stay hidden. 
+4. What kind of value does a Ring handler normally expect? A map. 
 
 ---
 
@@ -283,21 +272,20 @@ Later, Jetty and the Ring Jetty adapter will call your handler with a request ma
 
 Explain these:
 
-1. What is a Ring handler?
-2. What is a request map?
-3. What is a response map?
-4. Why did we call the handler directly before using Jetty?
-5. What does `_` mean as a parameter name?
-6. Why is `{}` better than `nil` for practice?
-7. What will Jetty add later?
+1. What is a Ring handler? A function. 
+2. What is a request map? A clojure map describing the HTTP request. 
+3. What is a response map? A clojure map describing the HTTP response. 
+4. Why did we call the handler directly before using Jetty? To understand and test the pure function first. 
+5. What does `_` mean as a parameter name? "Ignore this argument"
+6. Why is `{}` better than `nil` for practice? It is a valid empty request map. 
+7. What will Jetty add later? A real request map built from the HTTP connection.  
 
 ---
 
 ## Exit ticket
 
-1. A handler is not a server. Explain why.
-2. A handler can be tested without a browser. Explain how.
-4. What does this return?
+1. A handler is not a server. Explain why. It just transforms data, it doesn't listen on a port or accept connectiosn. 
+2. A handler can be tested without a browser. Explain how. Call it directly in the REPL or -main with a fake request map. 
 
 ```clojure
 (request-method-handler {})
